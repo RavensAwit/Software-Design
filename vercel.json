@@ -1,20 +1,19 @@
 {
-    "version": 2,
-    "builds": [
+  "version": 2,
+  "builds": [
       {
-        "src": "api/FlaskApp.py",
-        "use": "@vercel/python",
-        "config": { "maxLambdaSize": "15mb" }
+          "src": "api/FlaskApp.py",
+          "use": "@vercel/python",
+          "config": { "maxLambdaSize": "15mb" }
       },
       {
-        "src": "public/**/*",
-        "use": "@vercel/static"
+          "src": "public/**/*",
+          "use": "@vercel/static"
       }
-    ],
-    "routes": [
+  ],
+  "routes": [
       { "src": "/api/(.*)", "dest": "/api/FlaskApp.py" },
       { "src": "/static/(.*)", "dest": "/public/static/$1" },
       { "src": "/(.*)", "dest": "/public/$1" }
-    ]
-  }
-  
+  ]
+}
