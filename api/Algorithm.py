@@ -120,3 +120,4 @@ def calculate_2d_bubble_wrap_size(optimal_dimensions):
     bubble_wrap_length = 2 * optimal_length + 2 * optimal_height
     bubble_wrap_width = optimal_width + optimal_height
     return bubble_wrap_length, bubble_wrap_width
+    
