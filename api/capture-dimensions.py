@@ -3,7 +3,7 @@ import base64
 import cv2
 import numpy as np
 import time
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from Algorithm import capture_dimensions_from_image
 
 # Create a ThreadPoolExecutor for offloading processing
@@ -45,7 +45,10 @@ def decode_and_process_image(image_data):
     except Exception as e:
         return None, str(e)
 
-def handler(request):
+async def handler(request):
+    """
+    Flask request handler with offloaded image processing.
+    """
     data = request.get_json()
     if not data or 'image' not in data:
         return jsonify({'error': 'No image provided.'}), 400
@@ -54,7 +57,9 @@ def handler(request):
 
     # Submit image processing to a separate thread
     future = executor.submit(decode_and_process_image, image_data)
-    result, error = future.result()
+    
+    # Non-blocking: Wait for the processing to complete
+    result, error = await future_to_async(future)
 
     if error:
         return jsonify({'error': f'An error occurred: {error}'}), 500
@@ -66,3 +71,11 @@ def handler(request):
         'image_url': result['image_url'],
         'processing_time': f"{result['processing_time']:.2f} seconds"
     })
+
+def future_to_async(future):
+    """
+    Utility function to wrap concurrent futures in asyncio.
+    """
+    import asyncio
+    loop = asyncio.get_event_loop()
+    return loop.run_in_executor(None, future.result)
