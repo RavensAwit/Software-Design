@@ -1,8 +1,24 @@
 {
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/*.py",
+      "use": "@vercel/python",
+      "config": { "runtime": "python3.12" }
+    },
+    {
+      "src": "public/**/*",
+      "use": "@vercel/static"
+    }
+  ],
   "routes": [
-    { "src": "/", "dest": "/public/index.html" },
     { "src": "/api/capture-dimensions", "dest": "/api/capture-dimensions.py" },
     { "src": "/api/process-dimensions", "dest": "/api/process-dimensions.py" },
-    { "src": "/static/(.*)", "dest": "/public/static/$1" }
-  ]
+    { "src": "/static/(.*)", "dest": "/public/static/$1" },
+    { "src": "/", "dest": "/public/index.html" }
+  ],
+  "functions": {
+    "memory": 512,
+    "maxDuration": 10
+  }
 }
