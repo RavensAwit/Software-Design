@@ -1,19 +1,14 @@
 {
-  "version": 2,
-  "builds": [
-      {
-          "src": "api/FlaskApp.py",
-          "use": "@vercel/python",
-          "config": { "maxLambdaSize": "15mb" }
-      },
-      {
-          "src": "public/**/*",
-          "use": "@vercel/static"
-      }
-  ],
-  "routes": [
-      { "src": "/api/(.*)", "dest": "/api/FlaskApp.py" },
+    "version": 2,
+    "builds": [
+      { "src": "api/*.py", "use": "@vercel/python" },
+      { "src": "public/**/*", "use": "@vercel/static" }
+    ],
+    "routes": [
+      { "src": "/api/capture-dimensions", "dest": "/api/capture-dimensions.py" },
+      { "src": "/api/process-dimensions", "dest": "/api/process-dimensions.py" },
       { "src": "/static/(.*)", "dest": "/public/static/$1" },
       { "src": "/(.*)", "dest": "/public/$1" }
-  ]
-}
+    ]
+  }
+  
