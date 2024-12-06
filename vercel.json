@@ -4,7 +4,11 @@
     {
       "src": "api/*.py",
       "use": "@vercel/python",
-      "config": { "runtime": "python3.12" }
+      "config": {
+        "runtime": "python3.12",
+        "memory": 512,
+        "maxDuration": 10
+      }
     },
     {
       "src": "public/**/*",
@@ -16,9 +20,5 @@
     { "src": "/api/process-dimensions", "dest": "/api/process-dimensions.py" },
     { "src": "/static/(.*)", "dest": "/public/static/$1" },
     { "src": "/", "dest": "/public/index.html" }
-  ],
-  "functions": {
-    "memory": 512,
-    "maxDuration": 10
-  }
+  ]
 }
